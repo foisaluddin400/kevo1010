@@ -152,7 +152,7 @@ const SidBar = () => {
   };
 
   return (
-    <div className="custom-sidebar h-[100vh] bg-white">
+    <div className="custom-sidebar h-[100vh] bg-[#18212b] text-gray-400">
       <div className="custom-sidebar-logo flex justify-center">
         <img src={logo} alt="Logo" className="w-[160px]" />
       </div>
@@ -174,13 +174,13 @@ const SidBar = () => {
             <div key={item.key}>
               <Link
                 to={item.link}
-                className={`menu-item my-2 mr-3 py-[10px] px-3 flex items-center cursor-pointer ${
+                className={`menu-item my-2  py-[10px] px-4 flex items-center cursor-pointer ${
                   selectedKey === item.key ||
                   isSettingsActive ||
                   isCreatorActive ||
                   isCategoriesActive
-                    ? "bg-[#E63946] text-white rounded-r-3xl "
-                    : "bg-white rounded-r-3xl hover:bg-gray-200"
+                    ? "bg-gradient-to-r from-[#6e1515] border-l-2 border-green-500 to-[#ffffff00] text-white  "
+                    : "  hover:bg-gradient-to-r hover:from-[#470e0e]"
                 }`}
                 onClick={(e) => {
                   if (item.children) {
@@ -210,7 +210,7 @@ const SidBar = () => {
               {/* Show children menu if expanded */}
               {item.children && (
                 <div
-                  className={`children-menu bg-white ml-6 mx-2  transition-all duration-300 ${
+                  className={`children-menu  ml-6 mx-2  transition-all duration-300 ${
                     expandedKeys.includes(item.key) ? "expanded" : ""
                   }`}
                   style={{
@@ -226,12 +226,12 @@ const SidBar = () => {
                       to={child.link}
                       className={`menu-item p-2 flex items-center cursor-pointer ${
                         selectedKey === child.key
-                          ? "bg-[#E63946] text-white"
-                          : "hover:bg-gray-200"
+                          ? " text-red-500"
+                          : "hover:bg-gradient-to-r hover:from-[#470e0e]"
                       }`}
-                      onClick={() => {
-                        setSelectedKey(child.key); // Set the selected key for children
-                        setExpandedKeys([]); // Close all expanded items
+                     onClick={() => {
+                        setSelectedKey(child.key); // শুধু selectedKey update হবে
+                        // setExpandedKeys([]); // এটা আর লাগবে না
                       }}
                     >
                       <span className="block w-full ">{child.label}</span>
@@ -245,16 +245,18 @@ const SidBar = () => {
       </div>
 
       {/* Logout Button */}
-      <div className="  w-full p-4 border-t mt-4">
+      <div className="mx-4 ">
+        <div className=" border-red-600 rounded w-full p-3 border mt-4">
         <button
           onClick={handleLogout}
-          className="w-full flex  text-black text-start rounded-md  "
+          className=" flex items-center text-red-600 text-start rounded-md  "
         >
           <span className="text-2xl">
             <IoIosLogIn />
           </span>
           <span className="ml-3">Log Out</span>
         </button>
+      </div>
       </div>
     </div>
   );
