@@ -11,7 +11,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { Navigate } from "../../Navigate";
 
 
-const UserManagement = () => {
+const ServicesProvider = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -100,14 +100,14 @@ const UserManagement = () => {
   return (
     <div className="bg-white p-3 h-[87vh] overflow-auto ">
       <div className="flex justify-between ">
-        <Navigate title={"Customer"} />
+        <Navigate title={"Services Provider"} />
         <div className="flex gap-4">
               <Select
        
-       value={'All User'}
+       value={'ALL Service Provider'}
             style={{ width: "200px", height: "40px" }}
             options={[
-              { value: "", label: "All Users" },
+              { value: "", label: "ALL Service Provider" },
               { value: "UNBLOCKED", label: "Unblocked" },
               { value: "BLOCKED", label: "Blocked" },
             ]}
@@ -180,4 +180,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default ServicesProvider;

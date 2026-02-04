@@ -7,35 +7,25 @@
   },
   {
     "key": "userManagement",
-    "label": "User Management",
+    "label": "Customer",
     "icon": "FiUser",
     "link": "/dashboard/UserManagement"
   },
+  {
+    "key": "servicesProvider",
+    "label": "Services Provider",
+    "icon": "FiUser",
+    "link": "/dashboard/ServicesProvider"
+  },
+
+   {
+    "key": "manageRefund",
+    "label": "Manage Refund",
+    "icon": "FiUser",
+    "link": "/dashboard/manageRefund"
+  },
   
-  {
-    "key": "categoriesManagement",
-    "label": "Categories Management",
-    "icon": "TbCategory2",
-    "link": "/dashboard/CategoriesManagement/Categories",
-    "children": [
-      {
-        "key": "categories",
-        "label": "Categories",
-        "link": "/dashboard/CategoriesManagement/Categories"
-      },
-      {
-        "key": "subcategory",
-        "label": "Subcategory",
-        "link": "/dashboard/CategoriesManagement/Subcategory"
-      }
-    ]
-  },
-  {
-    "key": "subscription",
-    "label": "Subscription",
-    "icon": "TbCategory2",
-    "link": "/dashboard/Subscription"
-  },
+ 
   {
     "key": "settings",
     "label": "Settings",

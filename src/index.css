@@ -44,7 +44,7 @@ select option {
 
 .ant-table-thead > tr > th {
   border: none !important;
-  background: #f5f5f5; /* Optional: Header Background */
+  background: #9c2f2f; 
 }
 
 .ant-table-tbody > tr > td {
@@ -66,8 +66,9 @@ select option {
 
 /* Active pagination button */
 .ant-pagination-item-active {
-  background-color: #D9000A !important; /* Active background color */
-  border-color: #D9000A !important;    /* Active border color */
+  background-color: #2C80EC !important; /* Active background color */
+  border-radius: 2%;
+  border-color: #2C80EC !important;    /* Active border color */
 }
 
 /* Active pagination button text */
@@ -108,11 +109,11 @@ select option {
 
 
 .custom-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
-  color: red !important; /* Active ট্যাবের টেক্সট লাল হবে */
+  color: red !important; 
 }
 
 .custom-tabs .ant-tabs-ink-bar {
-  background-color: red !important; /* Active ট্যাবের নিচের বর্ডার লাল হবে */
+  background-color: red !important; 
 }
 
 

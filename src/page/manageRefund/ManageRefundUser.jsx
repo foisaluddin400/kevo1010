@@ -11,7 +11,7 @@ import { FaRegCircleUser } from "react-icons/fa6";
 import { Navigate } from "../../Navigate";
 
 
-const UserManagement = () => {
+const ManageRefundUser = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -50,7 +50,7 @@ const UserManagement = () => {
   const columns = [
     { title: "No", dataIndex: "no", key: "no" },
     {
-      title: "Name",
+      title: " Customer",
       key: "name",
       render: (_, record) => (
         <div className="flex items-center gap-3">
@@ -74,14 +74,7 @@ const UserManagement = () => {
           <button className="text-xl bg-[#2C80EC] text-white p-1 rounded" onClick={() => showModal2(record)}>
             <FaRegCircleUser />
           </button>
-          <button
-            onClick={() => handleBlockUnblock(record?.block)}
-            className={`w-[30px] h-[30px] flex justify-center items-center text-xl rounded-md ${
-              record.blockId ? "bg-[#2C80EC] text-white" : "border border-gray-300 text-[#2C80EC]"
-            } `}
-          >
-            <MdBlockFlipped />
-          </button>
+       
         </div>
       ),
     },
@@ -98,27 +91,8 @@ const UserManagement = () => {
   const paginatedUsers = dummyUsers.slice(start, end);
 
   return (
-    <div className="bg-white p-3 h-[87vh] overflow-auto ">
-      <div className="flex justify-between ">
-        <Navigate title={"Customer"} />
-        <div className="flex gap-4">
-              <Select
-       
-       value={'All User'}
-            style={{ width: "200px", height: "40px" }}
-            options={[
-              { value: "", label: "All Users" },
-              { value: "UNBLOCKED", label: "Unblocked" },
-              { value: "BLOCKED", label: "Blocked" },
-            ]}
-          />
-          <Input
-          placeholder="Search by name..."
-          prefix={<SearchOutlined />}
-          style={{ marginBottom: "16px", maxWidth: "300px", height: "40px" }}
-        />
-        </div>
-      </div>
+    <div className="bg-white rounded-lg mt-4 p-3 h-[87vh] overflow-auto ">
+     
 
       <Table
         dataSource={paginatedUsers}
@@ -180,4 +154,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default ManageRefundUser;

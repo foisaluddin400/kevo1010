@@ -1,120 +1,163 @@
-import { Select } from "antd";
 import React, { useState } from "react";
-import {
-  ResponsiveContainer,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-} from "recharts";
+import { Input, Modal, Pagination, Table, message } from "antd";
+import { MdBlockFlipped } from "react-icons/md";
+import { FaArrowLeft } from "react-icons/fa";
+import { AiOutlinePhone, AiOutlineMail } from "react-icons/ai";
+import { GoLocation } from "react-icons/go";
+import { SearchOutlined } from "@ant-design/icons";
+import { LuEye } from "react-icons/lu";
+import { Navigate } from "../../Navigate";
+import { FaRegCircleUser } from "react-icons/fa6";
 
-const data = {
-  2024: [
-    { month: "Jan", value: 100 },
-    { month: "Feb", value: 90 },
-    { month: "Mar", value: 300 },
-    { month: "Apr", value: 250 },
-    { month: "May", value: 300 },
-    { month: "Jun", value: 20 },
-    { month: "Jul", value: 400 },
-    { month: "Aug", value: 250 },
-    { month: "Sep", value: 700 },
-    { month: "Oct", value: 50 },
-    { month: "Nov", value: 600 },
-    { month: "Dec", value: 155 },
-  ],
-  2023: [
-    { month: "Jan", value: 100 },
-    { month: "Feb", value: 90 },
-    { month: "Mar", value: 300 },
-    { month: "Apr", value: 250 },
-    { month: "May", value: 300 },
-    { month: "Jun", value: 20 },
-    { month: "Jul", value: 400 },
-    { month: "Aug", value: 250 },
-    { month: "Sep", value: 700 },
-    { month: "Oct", value: 50 },
-    { month: "Nov", value: 600 },
-    { month: "Dec", value: 155 },
-  ],
-  2022: [
-    { month: "Jan", value: 80 },
-    { month: "Feb", value: 130 },
-    { month: "Mar", value: 180 },
-    { month: "Apr", value: 230 },
-    { month: "May", value: 280 },
-    { month: "Jun", value: 330 },
-    { month: "Jul", value: 380 },
-    { month: "Aug", value: 430 },
-    { month: "Sep", value: 480 },
-    { month: "Oct", value: 530 },
-    { month: "Nov", value: 580 },
-    { month: "Dec", value: 630 },
-  ],
-};
+const ShopRegister = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
 
-const ShopRegistration = () => {
-  const [year, setYear] = useState("2024");
+  // Dummy data
+  const dummyUsers = Array.from({ length: 25 }, (_, index) => ({
+    key: index + 1,
+    no: index + 1,
+    name: `User ${index + 1}`,
+    email: `user${index + 1}@example.com`,
+    phone: `+8801${Math.floor(100000000 + Math.random() * 900000000)}`,
+    block: index + 1,
+    blockId: index % 2 === 0, // even users are blocked
+    image: `https://avatar.iran.liara.run/public/${index + 1}`,
+    createdAt: new Date().toLocaleDateString(),
+  }));
 
-  const handleYearChange = (value) => {
-    setYear(value);
+  // Modal states
+  const [isModalOpen2, setIsModalOpen2] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const showModal2 = (record) => {
+    setSelectedUser(record);
+    setIsModalOpen2(true);
   };
 
-  const items = [
-    { value: "2024", label: "2024" },
-    { value: "2023", label: "2023" },
-    { value: "2022", label: "2022" },
+  const handleCancel2 = () => {
+    setIsModalOpen2(false);
+    setSelectedUser(null);
+  };
+
+  // Dummy Block/Unblock
+  const handleBlockUnblock = (id) => {
+    message.success(`User with ID ${id} blocked/unblocked successfully`);
+  };
+
+  const columns = [
+    { title: "No", dataIndex: "no", key: "no" },
+    {
+      title: "Name",
+      key: "name",
+      render: (_, record) => (
+        <div className="flex items-center gap-3">
+          <img
+            src={record.image}
+            className="w-10 h-10 object-cover rounded-full"
+            alt="User Avatar"
+          />
+          <span>{record.name}</span>
+        </div>
+      ),
+    },
+    { title: "Phone Number", dataIndex: "phone", key: "phone" },
+    { title: "Email", dataIndex: "email", key: "email" },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <div className="flex gap-2 items-center justify-end">
+          <button
+            className="text-xl bg-[#2C80EC] text-white p-1 rounded"
+            onClick={() => showModal2(record)}
+          >
+            <FaRegCircleUser />
+          </button>
+          <button
+            onClick={() => handleBlockUnblock(record?.block)}
+            className={`w-[30px] h-[30px] flex justify-center items-center text-xl rounded-md ${
+              record.blockId
+                ? "bg-[#2C80EC] text-white"
+                : "border border-gray-300 text-[#2C80EC]"
+            } `}
+          >
+            <MdBlockFlipped />
+          </button>
+        </div>
+      ),
+    },
   ];
 
-  return (
-    <div className="">
-      {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <p className="text-2xl font-semibold text-gray-800">
-          Total Earnings
-        </p>
+  // Pagination
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
-        <Select
-          defaultValue="2024"
-          onChange={handleYearChange}
-          options={items}
-          className="w-32"
+  // Paginated data
+  const start = (currentPage - 1) * pageSize;
+  const end = start + pageSize;
+  const paginatedUsers = dummyUsers.slice(start, end);
+
+  return (
+    <div className="bg-white p-3 h-[87vh] overflow-auto ">
+      <Table
+        dataSource={paginatedUsers}
+        columns={columns}
+        pagination={false}
+        scroll={{ x: "max-content" }}
+        className="custom-table "
+      />
+
+      <div className="mt-4 flex justify-center">
+        <Pagination
+          current={currentPage}
+          pageSize={pageSize}
+          total={dummyUsers.length}
+          onChange={handlePageChange}
+          showSizeChanger={false}
         />
       </div>
 
-      {/* Chart */}
-      <div className="h-80">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={data[year]}
-            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#E63946" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#E63946" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#edc4c500" />
-            <XAxis dataKey="month" stroke="#6b7280"  tick={{ fontSize: 12, fontWeight: 500 }}/>
-            <YAxis stroke="#6b7280"  tick={{ fontSize: 12, fontWeight: 500 }}/>
-            <Tooltip
-              contentStyle={{ backgroundColor: "#fff", borderRadius: "8px" }}
-            />
-            <Area
-              type="monotone"
-              dataKey="value"
-              stroke="#E63946"
-              fillOpacity={1}
-              fill="url(#colorValue)"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
+      {/* Modal */}
+      <Modal
+        open={isModalOpen2}
+        centered
+        onCancel={handleCancel2}
+        footer={null}
+      >
+        {selectedUser && (
+          <div className="w-full max-w-md p-5 mx-auto">
+            <div className="flex flex-col items-center mb-6">
+              <div className="w-24 h-24 rounded-full bg-blue-100 mb-3 overflow-hidden">
+                <img
+                  src={selectedUser.image}
+                  alt="Profile avatar"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h2 className="text-xl font-bold">{selectedUser.name}</h2>
+
+              <div className="flex items-center text-gray-500 mt-1">
+                <AiOutlinePhone size={16} className="text-gray-400" />
+                <span className="ml-1 text-sm">{selectedUser.phone}</span>
+              </div>
+
+              <div className="flex items-center text-gray-500 mt-1">
+                <GoLocation size={16} className="text-gray-400" />
+                <span className="ml-1 text-sm">Location unavailable</span>
+              </div>
+
+              <div className="flex items-center text-gray-500 mt-1">
+                <AiOutlineMail size={16} className="text-gray-400" />
+                <span className="ml-1 text-sm">{selectedUser.email}</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 };
 
-export default ShopRegistration;
+export default ShopRegister;

@@ -19,6 +19,8 @@ import ResetPass from "../Auth/ResetPass";
 import Notification from "../page/Notification/Notification";
 import About from "../page/Settings/About";
 import Login from "../Auth/Login";
+import ServicesProvider from "../page/services-provider/ServicesProvider";
+import ManageRefund from "../page/manageRefund/ManageRefund";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/UserManagement",
         element: <UserManagement></UserManagement>,
+      },
+       {
+        path: "/dashboard/ServicesProvider",
+        element: <ServicesProvider></ServicesProvider>,
+      },
+       {
+        path: "/dashboard/manageRefund",
+        element: <ManageRefund></ManageRefund>,
       },
       {
         path: "/dashboard/CreatorManagement",

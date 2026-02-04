@@ -1,26 +1,21 @@
-import { RiUserForbidLine } from "react-icons/ri";
-import ActivityStatisticsChart from "./ActivityStatisticsChart";
-import BookingGrowth from "./BookingGrowth";
-import ShopRegistration from "./ShopRegister";
-import UserGrowthChart from "./UserGrowthChart";
-import { HiOutlineUserGroup } from "react-icons/hi2";
-import { VscNote } from "react-icons/vsc";
-import { PiMoneyLight } from "react-icons/pi";
-import Man from "../LayoutComponents/Man";
-import Services from "../LayoutComponents/Services";
-import Bag from "../LayoutComponents/Bag";
-import { Link } from "react-router-dom";
-const Dashboard = () => {
+import React from "react";
+import Man from "../../components/LayoutComponents/Man";
+import Services from "../../components/LayoutComponents/Services";
+import Bag from "../../components/LayoutComponents/Bag";
+import ManageRefundUser from "./ManageRefundUser";
+import { FaRegCircleUser } from "react-icons/fa6";
+
+const ManageRefund = () => {
   return (
-    <div className=" ">
+    <div>
       <div className="bg-gradient-to-b from-[#2dbcff3f] to-[#ffffff] rounded-2xl  border border-gray-100 p-4 sm:p-6 lg:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:divide-x divide-gray-200">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:divide-x divide-black">
           {/* Total Users Card */}
           <div className="flex items-center justify-center py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
             <div className="flex items-center space-x-4 sm:space-x-6">
               <div className="flex-shrink-0">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-                  <Man></Man>
+                <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center bg-[#2DBEFF33] text-4xl rounded-lg justify-center">
+                  <FaRegCircleUser />
                 </div>
               </div>
               <div className="flex-1 min-w-0">
@@ -35,7 +30,7 @@ const Dashboard = () => {
           </div>
 
           {/* Total Task Providers Card */}
-          <div className="flex items-center justify-center py-6 sm:py-8 px-4 sm:px-6 lg:px-8 border-t md:border-t-0 border-gray-200">
+          <div className="flex items-center justify-center py-6 sm:py-8 px-4 sm:px-6 lg:px-8 border-t md:border-t-0 border-black/10">
             <div className="flex items-center space-x-4 sm:space-x-6">
               <div className="flex-shrink-0">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
@@ -81,28 +76,9 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      <div className="grid grid-cols-2 gap-4 mt-4 ">
-        <div className="w-full h-full bg-white p-4 rounded-xl shadow">
-          <UserGrowthChart />
-        </div>
-        <div className=" bg-white p-4 rounded-xl shadow ">
-          {/* <ActivityStatisticsChart /> */}
-          <BookingGrowth></BookingGrowth>
-        </div>
-      </div>
-
-      <div className="bg-white flex justify-between w-full font-semibold mt-4 rounded-xl p-2">
-        <h1>Recently Joined</h1>
-        <Link className="text-[#2C80EC]" to="/dashboard/UserManagement">
-          View All
-        </Link>
-      </div>
-      <div className="w-full bg-white p-4 rounded-xl shadow mt-4">
-        <ShopRegistration></ShopRegistration>
-      </div>
+      <ManageRefundUser></ManageRefundUser>
     </div>
   );
 };
 
-export default Dashboard;
+export default ManageRefund;

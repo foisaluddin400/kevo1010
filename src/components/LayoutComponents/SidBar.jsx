@@ -4,7 +4,7 @@ import create from "../../assets/routerImg/create.png";
 import settings from "../../assets/routerImg/settings.png";
 import subscription from "../../assets/routerImg/subscription.png";
 import user from "../../assets/routerImg/user.png";
-import logo from "../../assets/header/logo.png";
+import logo from "../../assets/header/logo1.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronRight, FaHome } from "react-icons/fa";
@@ -152,9 +152,9 @@ const SidBar = () => {
   };
 
   return (
-    <div className="custom-sidebar h-[100vh] bg-[#18212b] text-gray-400">
-      <div className="custom-sidebar-logo flex justify-center">
-        <img src={logo} alt="Logo" className="w-[160px]" />
+    <div className="custom-sidebar h-[100vh] text-black">
+      <div className="custom-sidebar-logo my-5 flex justify-center">
+        <img src={logo} alt="Logo" className="w-[130px]" />
       </div>
       <div className="menu-items">
         {items.map((item) => {
@@ -179,8 +179,8 @@ const SidBar = () => {
                   isSettingsActive ||
                   isCreatorActive ||
                   isCategoriesActive
-                    ? "bg-gradient-to-r from-[#6e1515] border-l-2 border-green-500 to-[#ffffff00] text-white  "
-                    : "  hover:bg-gradient-to-r hover:from-[#470e0e]"
+                    ? "bg-[#2C80EC] text-white  "
+                    : "  hover:bg-gradient-to-r hover:from-[#2C80EC]"
                 }`}
                 onClick={(e) => {
                   if (item.children) {
@@ -229,9 +229,8 @@ const SidBar = () => {
                           ? " text-red-500"
                           : "hover:bg-gradient-to-r hover:from-[#470e0e]"
                       }`}
-                     onClick={() => {
-                        setSelectedKey(child.key); // শুধু selectedKey update হবে
-                        // setExpandedKeys([]); // এটা আর লাগবে না
+                      onClick={() => {
+                        setSelectedKey(child.key); 
                       }}
                     >
                       <span className="block w-full ">{child.label}</span>
@@ -247,16 +246,16 @@ const SidBar = () => {
       {/* Logout Button */}
       <div className="mx-4 ">
         <div className=" border-red-600 rounded w-full p-3 border mt-4">
-        <button
-          onClick={handleLogout}
-          className=" flex items-center text-red-600 text-start rounded-md  "
-        >
-          <span className="text-2xl">
-            <IoIosLogIn />
-          </span>
-          <span className="ml-3">Log Out</span>
-        </button>
-      </div>
+          <button
+            onClick={handleLogout}
+            className=" flex items-center text-red-600 text-start rounded-md  "
+          >
+            <span className="text-2xl">
+              <IoIosLogIn />
+            </span>
+            <span className="ml-3">Log Out</span>
+          </button>
+        </div>
       </div>
     </div>
   );

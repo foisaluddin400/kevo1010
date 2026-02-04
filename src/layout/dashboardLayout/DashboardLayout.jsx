@@ -11,7 +11,7 @@ const DashboardLayout = () => {
 
       <div className=" lg:flex-1 lg:ml-[260px]">
         <Header />
-        <div className="p-3 bg-slate-50">
+        <div className="p-3 bg-slate-100">
           <Outlet />
         </div>
       </div>

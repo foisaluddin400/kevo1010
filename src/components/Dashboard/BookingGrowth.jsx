@@ -73,7 +73,7 @@ const BookingGrowth = () => {
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <p className="text-xl font-semibold text-gray-800">
-          Total Earnings
+         Service Provider growth
         </p>
 
         <Select
@@ -93,8 +93,8 @@ const BookingGrowth = () => {
           >
             <defs>
               <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#E63946" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#E63946" stopOpacity={0} />
+                <stop offset="5%" stopColor="#2C80EC" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#2C80EC" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#edc4c500" />
@@ -106,7 +106,7 @@ const BookingGrowth = () => {
             <Area
               type="monotone"
               dataKey="value"
-              stroke="#E63946"
+              stroke="#2C80EC"
               fillOpacity={1}
               fill="url(#colorValue)"
             />

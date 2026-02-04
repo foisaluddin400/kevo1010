@@ -72,7 +72,7 @@ const UserGrowthChart = () => {
             fontSize: "18px",
           }}
         >
-          📈 User Growth
+          Customer Growth
         </h3>
         <Select
           className="min-w-32"
