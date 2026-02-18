@@ -14,14 +14,14 @@
   {
     "key": "servicesProvider",
     "label": "Services Provider",
-    "icon": "FiUser",
+    "icon": "HiReceiptRefund",
     "link": "/dashboard/ServicesProvider"
   },
 
    {
     "key": "manageRefund",
     "label": "Manage Refund",
-    "icon": "FiUser",
+    "icon": "CiMoneyBill",
     "link": "/dashboard/manageRefund"
   },
   
@@ -51,12 +51,8 @@
         "key": "faq",
         "label": "FAQ",
         "link": "/dashboard/Settings/FAQ"
-      },
-      {
-        "key": "about",
-        "label": "About Us",
-        "link": "/dashboard/Settings/aboutUs"
       }
+     
     ]
   }
 ]

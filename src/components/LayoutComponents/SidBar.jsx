@@ -1,241 +1,194 @@
-import dashboard from "../../assets/routerImg/dashboard.png";
-import categorie from "../../assets/routerImg/categorie.png";
-import create from "../../assets/routerImg/create.png";
-import settings from "../../assets/routerImg/settings.png";
-import subscription from "../../assets/routerImg/subscription.png";
-import user from "../../assets/routerImg/user.png";
-import logo from "../../assets/header/logo1.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { FaChevronRight, FaHome } from "react-icons/fa";
 import { IoIosLogIn } from "react-icons/io";
+import {  IoSettingsOutline } from "react-icons/io5";
+import { CiMoneyBill } from "react-icons/ci";
 import { logout } from "../../page/redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { FiUser } from "react-icons/fi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { TbCategory2 } from "react-icons/tb";
-import items from "../item.json";
-const icons = {
-  FaHome,
-  FiUser,
-  TbCategory2,
-  IoSettingsOutline,
-};
 
-// const items = [
-//   {
-//     key: "dashboard",
-//     label: "Dashboard",
-//     icon: <FaHome />,
-//     link: "/",
-//   },
-//   {
-//     key: "userManagement",
-//     label: "User Management",
-//     icon: <FiUser />,
-//     link: "/dashboard/UserManagement",
-//   },
+import { TbUserCircle } from "react-icons/tb";
 
-//     {
-//     key: "VendorManagement",
-//     label: "Vendor Management",
-//     icon: <FiUser />,
-//     link: "/dashboard/VendorManagement",
-//   },
-//   {
-//     key: "categoriesManagement",
-//     label: "Categories Management",
-//     icon: <TbCategory2 />,
-//     link: "/dashboard/CategoriesManagement/Categories",
-//     children: [
-//       {
-//         key: "categories",
-//         label: "Categories",
-//         link: "/dashboard/CategoriesManagement/Categories",
-//       },
-//       {
-//         key: "subcategory",
-//         label: "Subcategory",
-//         link: "/dashboard/CategoriesManagement/Subcategory",
-//       },
-//     ],
-//   },
-//   {
-//     key: "subscription",
-//     label: "Subscription",
-//     icon: <TbCategory2 />,
-//     link: "/dashboard/Subscription",
-//   },
-//   {
-//     key: "settings",
-//     label: "Settings",
-//     icon:<IoSettingsOutline />,
-//     link: "/dashboard/Settings/profile",
-//     children: [
-//       {
-//         key: "profile",
-//         label: "Profile",
-//         link: "/dashboard/Settings/profile",
-//       },
-//       {
-//         key: "terms",
-//         label: "Terms & Condition",
-//         link: "/dashboard/Settings/Terms&Condition",
-//       },
-//       {
-//         key: "privacy",
-//         label: "Privacy Policy",
-//         link: "/dashboard/Settings/PrivacyPolicy",
-//       },
-//       {
-//         key: "faq",
-//         label: "FAQ",
-//         link: "/dashboard/Settings/FAQ",
-//       },
-//       {
-//         key: "about",
-//         label: "About Us",
-//         link: "/dashboard/Settings/aboutUs",
-//       },
-//     ],
-//   },
-// ];
+import logo from "../../assets/header/logo1.png";
+import { CgUserList } from "react-icons/cg";
 
-const SidBar = () => {
+// Note: HiReceiptRefund was used but not imported → replaced with placeholder
+// You can import the real icon later (from 'react-icons/hi' for example)
+
+const items = [
+  {
+    key: "dashboard",
+    label: "Dashboard",
+    icon: <FaHome />,
+    link: "/dashboard",           // changed from "/" → more consistent
+  },
+  {
+    key: "userManagement",
+    label: "Customer",
+    icon: <TbUserCircle /> ,
+    link: "/dashboard/UserManagement",
+  },
+  {
+    key: "servicesProvider",
+    label: "Services Provider",
+    icon:<CgUserList />,              // temporary – replace with correct icon
+    link: "/dashboard/ServicesProvider",
+  },
+  {
+    key: "manageRefund",
+    label: "Manage Refund",
+    icon: <CiMoneyBill />,
+    link: "/dashboard/manageRefund",
+  },
+  {
+    key: "settings",
+    label: "Settings",
+    icon: <IoSettingsOutline />,
+    link: "/dashboard/Settings/profile", // fallback link
+    children: [
+      { key: "profile", label: "Profile", link: "/dashboard/Settings/profile" },
+      { key: "terms", label: "Terms & Condition", link: "/dashboard/Settings/Terms&Condition" },
+      { key: "privacy", label: "Privacy Policy", link: "/dashboard/Settings/PrivacyPolicy" },
+      { key: "faq", label: "FAQ", link: "/dashboard/Settings/FAQ" },
+    ],
+  },
+];
+
+const Sidebar = () => {
   const [selectedKey, setSelectedKey] = useState("dashboard");
   const [expandedKeys, setExpandedKeys] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
-  const contentRef = useRef({});
   const dispatch = useDispatch();
+  const contentRef = useRef({});
 
+  // Sync active menu item + auto-expand parent when path changes
   useEffect(() => {
     const currentPath = location.pathname;
 
-    let activeParent = null;
+    let foundItem = null;
+    let foundChild = null;
 
-    items.forEach((item) => {
+    for (const item of items) {
+      // exact match on parent
       if (item.link === currentPath) {
-        activeParent = item;
-      } else if (
-        item.children &&
-        item.children.some((child) => child.link === currentPath)
-      ) {
-        activeParent = item;
+        foundItem = item;
+        break;
       }
-    });
-
-    if (activeParent) {
-      setSelectedKey(
-        activeParent.children
-          ? activeParent.children.find((child) => child.link === currentPath)
-              ?.key || activeParent.key
-          : activeParent.key
-      );
-
-      if (activeParent.children && !expandedKeys.includes(activeParent.key)) {
-        setExpandedKeys([...expandedKeys, activeParent.key]);
+      // match on child
+      if (item.children) {
+        const child = item.children.find(c => c.link === currentPath);
+        if (child) {
+          foundItem = item;
+          foundChild = child;
+          break;
+        }
       }
     }
-  }, [location]);
 
-  const onParentClick = (key) => {
-    setExpandedKeys((prev) =>
-      prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]
+    if (foundItem) {
+      if (foundChild) {
+        setSelectedKey(foundChild.key);
+        if (!expandedKeys.includes(foundItem.key)) {
+          setExpandedKeys(prev => [...prev, foundItem.key]);
+        }
+      } else {
+        setSelectedKey(foundItem.key);
+      }
+    }
+  }, [location.pathname]);
+
+  const toggleExpand = (key) => {
+    setExpandedKeys(prev =>
+      prev.includes(key) ? prev.filter(k => k !== key) : [...prev, key]
     );
   };
 
-  // Logout Function
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
   };
 
   return (
-    <div className="custom-sidebar h-[100vh] text-black">
-      <div className="custom-sidebar-logo my-5 flex justify-center">
-        <img src={logo} alt="Logo" className="w-[130px]" />
+    <div className="custom-sidebar h-screen bg-white text-gray-800 flex flex-col border-r border-gray-200">
+      {/* Logo */}
+      <div className="py-6 flex justify-center">
+        <img src={logo} alt="Logo" className="w-32" />
       </div>
-      <div className="menu-items">
-        {items.map((item) => {
-          const isSettingsActive =
-            item.key === "settings" &&
-            item.children.some((child) => child.link === location.pathname);
 
-          const isCreatorActive =
-            item.key === "creatorManagement" &&
-            item.children.some((child) => child.link === location.pathname);
+      {/* Menu */}
+      <div className="flex-1 px-3 space-y-1 overflow-y-auto">
+        {items.map(item => {
+          const isActive = selectedKey === item.key ||
+            (item.children?.some(child => child.key === selectedKey));
 
-          const isCategoriesActive =
-            item.key === "categoriesManagement" &&
-            item.children.some((child) => child.link === location.pathname);
-          const Icon = icons[item.icon];
+          const hasChildren = !!item.children;
+
           return (
             <div key={item.key}>
               <Link
                 to={item.link}
-                className={`menu-item my-2  py-[10px] px-4 flex items-center cursor-pointer ${
-                  selectedKey === item.key ||
-                  isSettingsActive ||
-                  isCreatorActive ||
-                  isCategoriesActive
-                    ? "bg-[#2C80EC] text-white  "
-                    : "  hover:bg-gradient-to-r hover:from-[#2C80EC]"
-                }`}
+                className={`
+                  flex items-center px-4 py-3 rounded-lg text-sm font-medium
+                  transition-colors duration-150
+                  ${isActive
+                    ? "bg-blue-600 text-white"
+                    : "text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                  }
+                `}
                 onClick={(e) => {
-                  if (item.children) {
+                  if (hasChildren) {
                     e.preventDefault();
-                    onParentClick(item.key);
+                    toggleExpand(item.key);
                   } else {
                     setSelectedKey(item.key);
                   }
                 }}
               >
-                <h1 className="w-5 mr-2">
-                  <Icon />
-                </h1>
+                <span className="w-5 mr-3 text-lg flex items-center justify-center">
+                  {item.icon}
+                </span>
+                <span className="flex-1">{item.label}</span>
 
-                <span className="block w-full ">{item.label}</span>
-
-                {/* Show dropdown arrow if children exist */}
-                {item.children && (
+                {hasChildren && (
                   <FaChevronRight
-                    className={`ml-auto transform transition-all text-[10px] duration-300 ${
+                    className={`text-xs transition-transform duration-200 ${
                       expandedKeys.includes(item.key) ? "rotate-90" : ""
                     }`}
                   />
                 )}
               </Link>
 
-              {/* Show children menu if expanded */}
-              {item.children && (
+              {/* Submenu */}
+              {hasChildren && (
                 <div
-                  className={`children-menu  ml-6 mx-2  transition-all duration-300 ${
-                    expandedKeys.includes(item.key) ? "expanded" : ""
-                  }`}
+                  className="overflow-hidden transition-all duration-300 ease-in-out"
                   style={{
                     maxHeight: expandedKeys.includes(item.key)
-                      ? `${contentRef.current[item.key]?.scrollHeight}px`
+                      ? `${contentRef.current[item.key]?.scrollHeight || 400}px`
                       : "0",
                   }}
-                  ref={(el) => (contentRef.current[item.key] = el)}
+                  ref={el => (contentRef.current[item.key] = el)}
                 >
-                  {item.children.map((child) => (
-                    <Link
-                      key={child.key}
-                      to={child.link}
-                      className={`menu-item p-2 flex items-center cursor-pointer ${
-                        selectedKey === child.key
-                          ? " text-red-500"
-                          : "hover:bg-gradient-to-r hover:from-[#470e0e]"
-                      }`}
-                      onClick={() => {
-                        setSelectedKey(child.key); 
-                      }}
-                    >
-                      <span className="block w-full ">{child.label}</span>
-                    </Link>
-                  ))}
+                  <div className="py-1 pl-11 pr-4 space-y-0.5">
+                    {item.children.map(child => (
+                      <Link
+                        key={child.key}
+                        to={child.link}
+                        className={`
+                          block py-2 px-3 rounded-md text-sm
+                          transition-colors
+                          ${selectedKey === child.key
+                            ? "bg-blue-100 text-blue-700 font-medium"
+                            : "text-gray-600 hover:bg-gray-100"
+                          }
+                        `}
+                        onClick={() => setSelectedKey(child.key)}
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
@@ -243,22 +196,23 @@ const SidBar = () => {
         })}
       </div>
 
-      {/* Logout Button */}
-      <div className="mx-4 ">
-        <div className=" border-red-600 rounded w-full p-3 border mt-4">
-          <button
-            onClick={handleLogout}
-            className=" flex items-center text-red-600 text-start rounded-md  "
-          >
-            <span className="text-2xl">
-              <IoIosLogIn />
-            </span>
-            <span className="ml-3">Log Out</span>
-          </button>
-        </div>
+      {/* Logout */}
+      <div className="p-4 border-t border-gray-200 mt-auto">
+        <button
+          onClick={handleLogout}
+          className="
+            w-full flex items-center justify-center gap-3
+            py-3 px-4 rounded-lg text-red-600 hover:bg-red-50
+            border border-red-200 hover:border-red-300
+            transition-colors font-medium
+          "
+        >
+          <IoIosLogIn className="text-xl" />
+          Log Out
+        </button>
       </div>
     </div>
   );
 };
 
-export default SidBar;
+export default Sidebar;
