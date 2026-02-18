@@ -20,7 +20,7 @@ const items = [
     key: "dashboard",
     label: "Dashboard",
     icon: <FaHome />,
-    link: "/dashboard",           // changed from "/" → more consistent
+    link: "/",           // changed from "/" → more consistent
   },
   {
     key: "userManagement",
