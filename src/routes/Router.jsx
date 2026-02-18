@@ -21,6 +21,9 @@ import About from "../page/Settings/About";
 import Login from "../Auth/Login";
 import ServicesProvider from "../page/services-provider/ServicesProvider";
 import ManageRefund from "../page/manageRefund/ManageRefund";
+import UserDetails from "../page/UserManagement/UserDetails";
+import ServicesProviderDetails from "../page/services-provider/ServicesProviderDetails";
+import ManageRefundDetails from "../page/manageRefund/ManageRefundDetails";
 
 
 export const router = createBrowserRouter([
@@ -40,13 +43,25 @@ export const router = createBrowserRouter([
         path: "/dashboard/UserManagement",
         element: <UserManagement></UserManagement>,
       },
+      {
+        path: "/dashboard/UserManagement/:id",
+        element: <UserDetails></UserDetails>
+      },
        {
         path: "/dashboard/ServicesProvider",
         element: <ServicesProvider></ServicesProvider>,
       },
+      {
+        path: "/dashboard/ServicesProvider/servicerProviderDetails/:id",
+        element: <ServicesProviderDetails></ServicesProviderDetails>
+      },
        {
         path: "/dashboard/manageRefund",
         element: <ManageRefund></ManageRefund>,
+      },
+       {
+        path: "/dashboard/manageRefund/details/:id",
+        element: <ManageRefundDetails></ManageRefundDetails>
       },
       {
         path: "/dashboard/CreatorManagement",

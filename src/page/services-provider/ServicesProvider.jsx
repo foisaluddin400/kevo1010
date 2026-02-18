@@ -9,6 +9,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 import { Navigate } from "../../Navigate";
+import { Link } from "react-router-dom";
 
 
 const ServicesProvider = () => {
@@ -71,9 +72,10 @@ const ServicesProvider = () => {
       align: "end",
       render: (_, record) => (
         <div className="flex gap-2 items-center justify-end">
-          <button className="text-xl bg-[#2C80EC] text-white p-1 rounded" onClick={() => showModal2(record)}>
+         <Link to={`/dashboard/ServicesProvider/servicerProviderDetails/${record?.key}`}>
+          <button className="text-xl bg-[#2C80EC] text-white p-1 rounded" >
             <FaRegCircleUser />
-          </button>
+          </button></Link>
           <button
             onClick={() => handleBlockUnblock(record?.block)}
             className={`w-[30px] h-[30px] flex justify-center items-center text-xl rounded-md ${

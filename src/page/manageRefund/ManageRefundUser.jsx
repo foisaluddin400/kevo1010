@@ -9,6 +9,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 import { Navigate } from "../../Navigate";
+import { Link } from "react-router-dom";
 
 
 const ManageRefundUser = () => {
@@ -71,9 +72,9 @@ const ManageRefundUser = () => {
       align: "end",
       render: (_, record) => (
         <div className="flex gap-2 items-center justify-end">
-          <button className="text-xl bg-[#2C80EC] text-white p-1 rounded" onClick={() => showModal2(record)}>
+        <Link to={`/dashboard/manageRefund/details/${record?.key}`}>  <button className="text-xl bg-[#2C80EC] text-white p-1 rounded" >
             <FaRegCircleUser />
-          </button>
+          </button></Link>
        
         </div>
       ),

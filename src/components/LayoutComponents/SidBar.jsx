@@ -49,7 +49,7 @@ const items = [
       { key: "profile", label: "Profile", link: "/dashboard/Settings/profile" },
       { key: "terms", label: "Terms & Condition", link: "/dashboard/Settings/Terms&Condition" },
       { key: "privacy", label: "Privacy Policy", link: "/dashboard/Settings/PrivacyPolicy" },
-      { key: "faq", label: "FAQ", link: "/dashboard/Settings/FAQ" },
+      
     ],
   },
 ];
