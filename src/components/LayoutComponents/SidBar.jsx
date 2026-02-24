@@ -13,7 +13,7 @@ import logo from "../../assets/header/logo1.png";
 import { CgUserList } from "react-icons/cg";
 
 // Note: HiReceiptRefund was used but not imported → replaced with placeholder
-// You can import the real icon later (from 'react-icons/hi' for example)
+// You can impor the real icon later (from 'react-icons/hi' for example)
 
 const items = [
   {
